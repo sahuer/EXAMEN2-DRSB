@@ -6,7 +6,7 @@ const ciudadesyLugaresController = require('../controllers/ciudades-y-lugares');
 router.post('/agregarCiudadesyLugares',ciudadesyLugaresController.postAgregarCiudadesyLugares)
 
 //Visualización de los datos
-router.get('/obtenerCiudadesyLugares',ciudadesyLugaresController.getObtenerCiudadesyLugares)
-router.post('/borrarCiudadesyLugares',ciudadesyLugaresController.postBorrarCiudadesyLugares)
+router.post('/obtenerCiudadesyLugares',ciudadesyLugaresController.postObtenerCiudadesyLugares)
+//router.post('/borrarCiudadesyLugares',ciudadesyLugaresController.postBorrarCiudadesyLugares)
 
 module.exports = router

@@ -6,7 +6,7 @@ exports.postAgregarCiudadesyLugares = async (req,res)=>{
     CyL._id = new mongoose.Types.ObjectId()
     try{
         // Agregar documento a la coleccion
-        const cylExiste = await CiudadesyLugares.findOne({ numero: req.body.numero, nombre: req.body.nombre })
+        const cylExiste = await CiudadesyLugares.exists({ ciudad: req.body.ciudad, lugar: req.body.lugar })
         if (!cylExiste){
             await CyL.save()
             console.log(CyL)
@@ -22,19 +22,19 @@ exports.postAgregarCiudadesyLugares = async (req,res)=>{
     }
 }
 
-exports.getObtenerCiudadesyLugares = async (req,res)=>{
-    const CyL = await CiudadesyLugares.find()
+exports.postObtenerCiudadesyLugares = async (req,res)=>{
+    const CyL = await CiudadesyLugares.find(req.body)
     console.log(CyL)
     res.json(CyL)
 }
 
-
+/*
 exports.postBorrarCiudadesyLugares = async (req,res)=>{
     try{
-        await CiudadesyLugares.findOneAndRemove(req.body)
+        await CiudadesyLugares.findByIdAndRemove(req.body)
         console.log("CiudadesyLugares eliminado")
         res.json({operacion:"correcta"})
     }catch(err){
         console.log(err)
     }
-}
+}*/
