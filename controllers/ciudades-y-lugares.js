@@ -5,16 +5,14 @@ exports.postAgregarCiudadesyLugares = async (req,res)=>{
     const CyL = new CiudadesyLugares(req.body)
     CyL._id = new mongoose.Types.ObjectId()
     try{
-        // Agregar documento a la coleccion
-        const cylExiste = await CiudadesyLugares.exists({ ciudad: req.body.ciudad, lugar: req.body.lugar })
-        if (!cylExiste){
-            await CyL.save()
-            console.log(CyL)
-            console.log("CiudadesyLugares registrado")
-            res.send({operacion:"correcta"})
-        }else{
-            res.send({operacion:"incorrecta repetido"})
-        }
+        // Agregar documento
+        const ExisteCoL = await CiudadesyLugares.exists({ ciudad: req.body.ciudad, lugar: req.body.lugar })
+        if (ExisteCoL) res.send({operacion:"repetido"})
+        
+        await CyL.save()
+        console.log(CyL)
+        console.log("CiudadesyLugares registrado")
+        res.send({operacion:"correcta"})
         
     }catch(err){
         console.log(err)
