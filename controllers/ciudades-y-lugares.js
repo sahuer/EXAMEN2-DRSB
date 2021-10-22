@@ -7,20 +7,19 @@ exports.postAgregarCiudadesyLugares = async (req,res)=>{
     try{
         // Agregar documento
         const ExisteCoL = await CiudadesyLugares.exists({ ciudad: req.body.ciudad, lugar: req.body.lugar })
-        
-        if (req.body.ciudad==undefined && ExisteCoL){   // Verifica si se registró un lugar y se repite
-            await CyL.save()
+        await CyL.save()
+
+        if (req.body.ciudad==undefined && ExisteCoL){   // Verifica si se registró un lugar y si se repite
             await CiudadesyLugares.updateMany({ lugar: req.body.lugar },{ $inc:{contador: 1 } }) // Incrementa el contador
-            const lug = await CiudadesyLugares.findOne({ lugar: req.body.lugar })
+            const lug = await CiudadesyLugares.findOne({ lugar: req.body.lugar }) // Se busca un registro pasado con el mismo lugar
             await CiudadesyLugares.findByIdAndUpdate(CyL._id, {contador: lug.contador}) // Se actualiza el contador al nuevo registro
 
             console.log("lugar registrado")
             res.send({operacion:"correcta y lugar repetido"})
 
-        } else if (req.body.lugar==undefined && ExisteCoL){ // Verifica si se registró una ciudad y se repite
-            await CyL.save()
+        } else if (req.body.lugar==undefined && ExisteCoL){ // Verifica si se registró una ciudad y si se repite
             await CiudadesyLugares.updateMany({ ciudad: req.body.ciudad },{ $inc:{contador: 1 } }) // Incrementa el contador
-            const ciu = await CiudadesyLugares.findOne({ ciudad: req.body.ciudad })
+            const ciu = await CiudadesyLugares.findOne({ ciudad: req.body.ciudad }) // Se busca un registro pasado con la misma ciudad
             await CiudadesyLugares.findByIdAndUpdate(CyL._id, {contador: ciu.contador}) // Se actualiza el contador al nuevo registro
 
             console.log("ciudad registrada")
@@ -33,7 +32,7 @@ exports.postAgregarCiudadesyLugares = async (req,res)=>{
             res.send({operacion:"correcta"})
         }
         
-    }catch(err){
+    } catch(err){
         console.log(err)
         res.send({operacion:"incorrecta"})
     }
