@@ -7,6 +7,5 @@ router.post('/agregarCiudadesyLugares',ciudadesyLugaresController.postAgregarCiu
 
 //Visualización de los datos
 router.post('/obtenerCiudadesyLugares',ciudadesyLugaresController.postObtenerCiudadesyLugares)
-//router.post('/borrarCiudadesyLugares',ciudadesyLugaresController.postBorrarCiudadesyLugares)
 
 module.exports = router
